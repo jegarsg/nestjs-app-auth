@@ -52,7 +52,7 @@ export class AuthService {
     const isPasswordValid = await comparePassword(dto.password, user.password);
     if (!isPasswordValid) throw new UnauthorizedException('Invalid credentials');
 
-    const payload = { sub: user.user_id, email: user.email };
+    const payload = { userid: user.user_id, email: user.email };
     const accessToken = this.jwtService.sign(payload);
 
     return { accessToken };

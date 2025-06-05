@@ -11,17 +11,21 @@ import { User } from '@modules/auth/domain/entities/user.entity';
 import { IUserRepository } from '@modules/auth/domain/repositories/user.repository';
 import { UserRepositoryImpl } from '@modules/auth/infrastructure/repositories/user.repository.impl';
 import { JwtStrategy } from '@modules/auth/infrastructure/strategies/jwt.strategy';
-
+import { UserController } from '@modules/auth/infrastructure/controllers/user.controller';
+import { UserService } from '@modules/auth/application/services/user.service';
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),
     PassportModule,
     JwtModule.register({
-      secret: process.env.JWT_SECRET || 'secret', // ✅ Secret from .env
-      signOptions: { expiresIn: '1h' },            // ✅ Token lifetime
+      secret: process.env.JWT_SECRET || 'secret',
+      signOptions: { expiresIn: '1h' },
     }),
   ],
-  controllers: [AuthController],
+  controllers: [
+    AuthController,
+    UserController,  
+  ],
   providers: [
     AuthService,
     JwtStrategy,
@@ -29,6 +33,7 @@ import { JwtStrategy } from '@modules/auth/infrastructure/strategies/jwt.strateg
       provide: IUserRepository,
       useClass: UserRepositoryImpl,
     },
+    UserService,       
   ],
 })
 export class AuthModule {}
