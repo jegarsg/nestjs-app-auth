@@ -10,5 +10,7 @@ export const getDatabaseConfig = (): TypeOrmModuleOptions => ({
   password: process.env.DB_PASS || '',
   database: process.env.DB_NAME || 'Auth',
   entities: [User],
-  synchronize: false, // ❗️Turn off in production
+  synchronize: false, //Turn off in production
+  logging: ['query', 'error'],     //Turn off in production
+  logger: 'advanced-console',      //Turn off in production
 });

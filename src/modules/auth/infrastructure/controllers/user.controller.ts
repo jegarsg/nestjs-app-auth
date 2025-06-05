@@ -11,7 +11,9 @@ export class UserController {
   @UseGuards(JwtAuthGuard)
   @Get('getuserbyid')
   async getUserById(@Req() req: Request): Promise<GetUserByIdDto> {
-    const userId = (req as any).user.userId;
+    const userId = (req as any).user.userid;
+    console.log('userId:', userId);
+    console.log('email', (req as any).user.email)
     return this.userService.getuserbyid(userId);
   }
 }
